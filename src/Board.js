@@ -78,13 +78,27 @@
     // --------------------------------------------------------------
     //
     // test if a specific row on this board contains a conflict
+
     hasRowConflictAt: function(rowIndex) {
+      let pieces = 0;
+      for (let space of this[rowIndex]) {
+        if (space === 1) {
+          pieces++;
+        }
+        if (pieces > 1) {
+          return true;
+        }
+      }
       return false; // fixme
     },
-
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      for (row in this.attributes) {
+        if (this.attributes.hasRowConflictAt(row)) {
+          return true;
+        }
+      }
+      return false;
     },
 
 
