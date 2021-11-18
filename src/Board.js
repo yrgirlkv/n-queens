@@ -137,23 +137,26 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      let hGap = majorDiagonalColumnIndexAtFirstRow - 1;
+      let j = majorDiagonalColumnIndexAtFirstRow;
       let pieces = 0;
-      for (let i = majorDiagonalColumnIndexAtFirstRow; i < this.attributes.n - 1; i++) {
-        let h = i - hGap;
-        if (this.attributes[h][i] === 1) {
-          pieces++;
+      for (let i = 0; i < this.attributes.n; i++) {
+        console.log('i: ' + i + ', j: ' + j);
+        if (j >= 0) {
+          if (this.attributes[i][j] === 1) {
+            pieces++;
+          }
+          if (pieces > 1) {
+            return true;
+          }
         }
-        if (pieces > 1) {
-          return true;
-        }
+        j++;
       }
       return false; // fixed
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      for (let i = 0; i < this.attributes.n; i++) {
+      for (let i = 1 - this.attributes.n; i < this.attributes.n; i++) {
         if (this.hasMajorDiagonalConflictAt(i)) {
           return true;
         }
