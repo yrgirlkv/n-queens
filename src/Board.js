@@ -140,7 +140,6 @@
       let j = majorDiagonalColumnIndexAtFirstRow;
       let pieces = 0;
       for (let i = 0; i < this.attributes.n; i++) {
-        console.log('i: ' + i + ', j: ' + j);
         if (j >= 0) {
           if (this.attributes[i][j] === 1) {
             pieces++;
@@ -172,14 +171,15 @@
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
       let pieces = 0;
-      let inputAlias = minorDiagonalColumnIndexAtFirstRow;
-      for (let i = minorDiagonalColumnIndexAtFirstRow; i >= 0; i--) {
-        let h = minorDiagonalColumnIndexAtFirstRow - i;
-        if (this.attributes[h][i] === 1) {
-          pieces++;
-        }
-        if (pieces > 1) {
-          return true;
+      for (let i = 0; i < minorDiagonalColumnIndexAtFirstRow; i++) {
+        let j = minorDiagonalColumnIndexAtFirstRow - i;
+        if (i < this.attributes.n) {
+          if (this.attributes[i][j] === 1) {
+            pieces++;
+          }
+          if (pieces > 1) {
+            return true;
+          }
         }
       }
       return false; // WIP
@@ -187,7 +187,7 @@
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      for (let i = 0; i < this.attributes.n; i++) {
+      for (let i = 0; i < (2 * this.attributes.n); i++) {
         if (this.hasMinorDiagonalConflictAt(i)) {
           return true;
         }
